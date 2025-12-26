@@ -48,17 +48,18 @@ def train_epoch(model, optimizer, criterion, loader, device):
     for src, tgt in tqdm(loader, desc="Training"):
         src, tgt = src.to(device), tgt.to(device)
         out = model(src, tgt)
+        # 预测tgt[1:]，输入tgt[:-1]
         loss = criterion(out[:, :-1, :].reshape(-1, out.size(-1)), tgt[:, 1:].reshape(-1))
         optimizer.zero_grad()
         loss.backward()
-        nn.utils.clip_grad_norm_(model.parameters(), 1)
+        nn.utils.clip_grad_norm_(model.parameters(), 1)  # 梯度裁剪
         optimizer.step()
         total_loss += loss.item()
     return total_loss / len(loader)
 
 
 def evaluate(model, loader, tgt_vocab, device):
-    """评估模型"""
+    """评估: 计算BLEU"""
     model.eval()
     bleu = BLEU(force=True)
     hyps, refs = [], []
