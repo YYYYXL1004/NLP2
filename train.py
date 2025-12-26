@@ -93,6 +93,7 @@ def main():
     parser.add_argument('--lr', type=float, default=0.0005)
     parser.add_argument('--save_dir', type=str, default='checkpoints')
     parser.add_argument('--seed', type=int, default=1)
+    parser.add_argument('--early_stop', type=int, default=5, help='早停patience，设为0禁用')
     args = parser.parse_args()
     
     torch.manual_seed(args.seed)
@@ -134,6 +135,7 @@ def main():
     
     # 训练
     best_bleu = 0
+    no_improve = 0
     ckpt_path = os.path.join(args.save_dir, f"{model_name}_best.pt")
     
     for epoch in range(args.num_epoch):
@@ -147,8 +149,15 @@ def main():
         
         if valid_bleu > best_bleu:
             best_bleu = valid_bleu
+            no_improve = 0
             torch.save(model.state_dict(), ckpt_path)
             print(f"保存模型到 {ckpt_path}")
+        else:
+            no_improve += 1
+            print(f"无提升 ({no_improve}/{args.early_stop})")
+            if args.early_stop > 0 and no_improve >= args.early_stop:
+                print(f"早停触发，停止训练")
+                break
     
     # 测试
     print("\n=== 测试 ===")

@@ -146,27 +146,147 @@ Bahdanau加性注意力：
 
 ---
 
-## 命令行使用示例
-
-```bash
-# 训练LSTM+Attention
-python train.py --model_type lstm --use_attention --num_epoch 10
-
-# 训练GRU+Attention
-python train.py --model_type gru --use_attention --num_epoch 10
-
-# 训练Transformer
-python train.py --model_type transformer --num_epoch 10
-
-# 运行测试
-python test_rnn_variants.py
-python test_transformer.py
-```
-
----
-
 ## 参考资料
 
 - LSTM原理: https://colah.github.io/posts/2015-08-Understanding-LSTMs/
 - Seq2Seq+Attention: https://lena-voita.github.io/nlp_course/seq2seq_and_attention.html
 - Transformer: https://theaisummer.com/transformer/
+
+---
+
+## 实验设计
+
+### 实验目标
+1. 验证 LSTM/GRU 相比普通 RNN 的性能提升
+2. 验证 Attention 机制对翻译质量的提升效果
+3. 验证 Transformer 架构的优越性
+4. 分析不同模型的训练效率与资源消耗
+
+### 公共超参数配置
+
+| 参数 | 值 | 说明 |
+|------|-----|------|
+| batch_size | 256 | 批次大小 |
+| num_epoch | 20 | 训练轮数 |
+| early_stop | 5 | 早停patience |
+| learning_rate | 0.001 | 学习率 |
+| hidden_size | 256 | 隐藏层维度 |
+| embed_size | 256 | 词嵌入维度 |
+| max_len | 10 | 最大序列长度 |
+| train_data | 26,187 | 训练集大小 |
+
+### Transformer 专用配置
+
+| 参数 | 值 | 说明 |
+|------|-----|------|
+| num_layer | 3 | 编码器/解码器层数 |
+| num_head | 8 | 注意力头数 |
+| hidden_size | 256 | 隐藏层维度 |
+| ffn_hidden_size | 512 | FFN中间层维度 |
+| dropout | 0.1 | Dropout比率 |
+
+---
+
+### 实验组1: RNN变体对比 (无Attention)
+
+**目的**: 对比普通RNN、LSTM、GRU三种循环单元的性能差异
+
+| 实验编号 | 模型 | 命令 |
+|----------|------|------|
+| Exp1-1 | RNN | `python train.py --model_type rnn --batch_size 256 --num_epoch 20 --early_stop 5 --lr 0.001` |
+| Exp1-2 | LSTM | `python train.py --model_type lstm --batch_size 256 --num_epoch 20 --early_stop 5 --lr 0.001` |
+| Exp1-3 | GRU | `python train.py --model_type gru --batch_size 256 --num_epoch 20 --early_stop 5 --lr 0.001` |
+
+**结果记录**:
+
+| 实验编号 | 模型 | 训练时间 | 最终Loss | 验证BLEU | 测试BLEU | 参考BLEU |
+|----------|------|----------|----------|----------|----------|----------|
+| Exp1-1 | RNN | | | | | 1.41 |
+| Exp1-2 | LSTM | | | | | - |
+| Exp1-3 | GRU | | | | | - |
+
+**预期**: LSTM ≈ GRU > RNN
+
+---
+
+### 实验组2: Attention机制效果对比
+
+**目的**: 验证Attention机制对各RNN变体的提升效果
+
+| 实验编号 | 模型 | 命令 |
+|----------|------|------|
+| Exp2-1 | RNN+Att | `python train.py --model_type rnn --use_attention --batch_size 256 --num_epoch 20 --early_stop 5 --lr 0.001` |
+| Exp2-2 | LSTM+Att | `python train.py --model_type lstm --use_attention --batch_size 256 --num_epoch 20 --early_stop 5 --lr 0.001` |
+| Exp2-3 | GRU+Att | `python train.py --model_type gru --use_attention --batch_size 256 --num_epoch 20 --early_stop 5 --lr 0.001` |
+
+**结果记录**:
+
+| 实验编号 | 模型 | 训练时间 | 最终Loss | 验证BLEU | 测试BLEU | 参考BLEU |
+|----------|------|----------|----------|----------|----------|----------|
+| Exp2-1 | RNN+Att | | | | | 13.15 |
+| Exp2-2 | LSTM+Att | | | | | 13.52 |
+| Exp2-3 | GRU+Att | | | | | - |
+
+**预期**: LSTM+Att ≈ GRU+Att > RNN+Att >> 无Attention版本
+
+---
+
+### 实验组3: Transformer实验
+
+**目的**: 验证Transformer架构的性能优势
+
+| 实验编号 | 模型 | 命令 |
+|----------|------|------|
+| Exp3-1 | Transformer | `python train.py --model_type transformer --batch_size 256 --num_epoch 20 --early_stop 5 --lr 0.001 --num_layers 3 --num_heads 8 --d_ff 512 --dropout 0.1` |
+
+**结果记录**:
+
+| 实验编号 | 模型 | 训练时间 | 最终Loss | 验证BLEU | 测试BLEU | 参考BLEU |
+|----------|------|----------|----------|----------|----------|----------|
+| Exp3-1 | Transformer | | | | | 23.41 |
+
+**预期**: Transformer >> LSTM+Att > RNN+Att
+
+---
+
+### 实验组4: 综合对比汇总
+
+**目的**: 汇总所有模型的最终结果，进行横向对比
+
+| 排名 | 模型 | 测试BLEU | 训练时间(GPU) | 训练时间(CPU) | GPU显存 | 相对提升 |
+|------|------|----------|---------------|---------------|---------|----------|
+| 1 | Transformer | | ~5.5min | ~1h10min | ~1501MB | baseline |
+| 2 | LSTM+Att | | ~3.1min | ~1h10min | ~1449MB | |
+| 3 | GRU+Att | | | | | |
+| 4 | RNN+Att | | ~2.4min | ~1h10min | ~1431MB | |
+| 5 | LSTM | | | | | |
+| 6 | GRU | | | | | |
+| 7 | RNN | | ~1.5min | ~50min | ~1249MB | |
+
+---
+
+### 实验执行顺序
+
+建议按以下顺序执行实验，便于对比分析：
+
+```bash
+# 实验组1: RNN变体对比
+bash scripts/exp1_rnn_variants.sh
+
+# 实验组2: Attention机制效果
+bash scripts/exp2_attention.sh
+
+# 实验组3: Transformer
+bash scripts/exp3_transformer.sh
+```
+
+---
+
+### 分析要点
+
+1. **RNN vs LSTM/GRU**: 门控机制对长距离依赖的影响
+2. **有无Attention**: 注意力机制对翻译对齐的帮助
+3. **RNN系列 vs Transformer**: 并行计算与自注意力的优势
+4. **训练效率**: 不同模型的时间/显存开销对比
+5. **收敛速度**: Loss下降曲线对比分析
+
