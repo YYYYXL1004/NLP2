@@ -1,24 +1,117 @@
-# seq2seq_translation_example
-自然语言处理23学年秋季学期作业2（基于Seq2Seq模型的机器翻译）示例代码
+# Seq2Seq 机器翻译实验
 
-## 数据集
-本次作业数据选自[Tatoeba](https://www.manythings.org/anki/)数据集中的中文-英文翻译数据。
+自然语言处理课程作业：基于Seq2Seq模型的中英机器翻译
 
-数据已经下载并处理好，位于`data`文件夹中。其中包含26,187条训练集数据`zh_en_train.txt`，1,000条验证集数据`zh_en_val.txt`，以及1,000条测试集数据`zh_en_test.txt`。每一行是一组数据，形式为“中文句子\t英文句子”。
+## 项目结构
 
-## 评测指标
-本次作业采用BLEU Score为评测指标。评测代码提供在示例代码中，需要下载`sacrebleu`包。
+```
+├── data/                    # 数据集
+│   ├── zh_en_train.txt     # 训练集 (26,187条)
+│   ├── zh_en_val.txt       # 验证集 (1,000条)
+│   └── zh_en_test.txt      # 测试集 (1,000条)
+├── docs/
+│   └── 研究报告.md          # 研究报告
+├── figures/                 # 可视化图表
+├── logs/                    # 训练日志
+├── checkpoints/             # 模型权重
+├── scripts/                 # 实验脚本
+│   ├── exp1_rnn_variants.sh    # RNN/LSTM/GRU实验
+│   ├── exp2_attention.sh       # Attention实验
+│   ├── exp3_transformer.sh     # Transformer实验
+│   ├── exp_ablation.sh         # 消融实验
+│   ├── plot_comparison.py      # 绘制对比图
+│   ├── plot_ablation.py        # 绘制消融实验图
+│   ├── plot_attention.py       # 绘制Attention热力图
+│   └── case_analysis.py        # 案例分析
+├── seq2seq_models.py        # RNN/LSTM/GRU + Attention 模型实现
+├── transformer.py           # Transformer 模型实现
+├── train.py                 # 训练脚本
+├── utils.py                 # 工具函数
+├── seq2seq-rnn.py          # 原始baseline代码
+└── requirements.txt         # 依赖包
+```
 
-## Baseline模型
-本次作业提供的baseline模型是基于普通RNN的Seq2Seq模型，在`seq2seq-rnn.py`中。
+## 环境配置
+
+```bash
+pip install -r requirements.txt
+```
+
+## 快速开始
+
+### 训练模型
+
+```bash
+# RNN (baseline)
+python train.py --model_type rnn --num_epoch 20
+
+# LSTM
+python train.py --model_type lstm --num_epoch 20
+
+# GRU
+python train.py --model_type gru --num_epoch 20
+
+# RNN + Attention
+python train.py --model_type rnn --use_attention --num_epoch 20
+
+# LSTM + Attention
+python train.py --model_type lstm --use_attention --num_epoch 20
+
+# GRU + Attention
+python train.py --model_type gru --use_attention --num_epoch 20
+
+# Transformer
+python train.py --model_type transformer --num_layers 3 --num_heads 8 --num_epoch 20
+```
+
+### 运行全部实验
+
+```bash
+bash scripts/exp1_rnn_variants.sh   # RNN变体实验
+bash scripts/exp2_attention.sh      # Attention实验
+bash scripts/exp3_transformer.sh    # Transformer实验
+bash scripts/exp_ablation.sh        # 消融实验
+```
+
+### 生成可视化图表
+
+```bash
+python scripts/plot_comparison.py   # 训练曲线和最终结果对比
+python scripts/plot_ablation.py     # 消融实验图表
+python scripts/plot_attention.py    # Attention热力图
+```
 
 ## 实验结果
 
-以下模型都可以在有16GB内存CPU的电脑上训练。其中RNN为提供baseline示例模型的效果。其他模型需要同学们自己实现，结果是提供参考的。
-其中Transformer模型的设置为：`num_layer=3`, `num_head=8`, `hidden_size=256`, `ffn_hidden_size=512`, `dropout=0.1`。训练相关超参数和示例代码相同。
-| Model |#train data |  BLEU  |  Train Time (GPU) | Train Time (CPU)| GPU Mem |
-|----------|:-------------:|:-----:|:-----:|:-----:|:-----:|
-| RNN         |  26,187   | 1.41 | 1.5 min | ~  50min    | 1,249 MB |
-| RNN+Att     |  26,187   | 13.15 | 2.4 min | ~ 1h 10min    | 1,431 MB |
-| LSTM+Att    |  26,187   | 13.52 | 3.1 min | ~ 1h 10min    | 1,449 MB |
-| Transformer |  26,187   | 23.41  | 5.5 min | ~ 1h 10min | 1,501 MB  |
+| 模型 | 验证BLEU | 测试BLEU | 训练时间(GPU) |
+|------|---------|----------|--------------|
+| RNN | 0.90 | 0.75 | ~97s |
+| LSTM | 9.44 | 9.36 | ~345s |
+| GRU | 9.02 | 7.99 | ~329s |
+| RNN+Attention | 19.33 | 18.13 | ~243s |
+| LSTM+Attention | 20.20 | 17.37 | ~377s |
+| GRU+Attention | 22.54 | 19.76 | ~345s |
+| Transformer | 26.95 | 25.45 | ~509s |
+
+![最终结果对比](figures/final_results.png)
+
+## 模型实现说明
+
+### LSTM/GRU
+- 基于 `nn.Linear` 手动实现，未调用 `nn.LSTMCell` 或 `nn.GRUCell`
+- 代码位于 `seq2seq_models.py`
+
+### Attention
+- 实现 Bahdanau 加性注意力机制
+- Decoder每步计算对Encoder所有隐状态的注意力权重
+
+### Transformer
+- 基于 `nn.Linear` 实现多头注意力，未调用 `nn.Transformer`
+- 配置：`num_layers=3, num_heads=8, d_model=256, d_ff=512, dropout=0.1`
+- 代码位于 `transformer.py`
+
+## 参考资料
+
+- [Understanding LSTM Networks](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
+- [Seq2seq and Attention](https://lena-voita.github.io/nlp_course/seq2seq_and_attention.html)
+- [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/)
