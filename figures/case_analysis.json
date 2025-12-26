@@ -1,0 +1,132 @@
+[
+  {
+    "src": "我 爱 你",
+    "ref": "I love you",
+    "hyps": {
+      "RNN": "I don't know what I have to go to the station.",
+      "LSTM": "I know that you are.",
+      "GRU": "I love you very good at once.",
+      "RNN+Att": "I love you, anymore.",
+      "LSTM+Att": "I love my love",
+      "GRU+Att": "I love you love to you in the same you.",
+      "Transformer": "I love you."
+    }
+  },
+  {
+    "src": "他 是 我 的 朋友",
+    "ref": "He is my friend",
+    "hyps": {
+      "RNN": "I don't know what I have to go to the station.",
+      "LSTM": "He is my friend.",
+      "GRU": "He is my favorite subject.",
+      "RNN+Att": "He is my friend of mine.",
+      "LSTM+Att": "He is my friend friend.",
+      "GRU+Att": "He is a friend of mine.",
+      "Transformer": "He is my friend."
+    }
+  },
+  {
+    "src": "今天 天气 很 好",
+    "ref": "The weather is nice today",
+    "hyps": {
+      "RNN": "I don't know what I have to go to the station.",
+      "LSTM": "It's very hot today, is today.",
+      "GRU": "It's a good painter, aren't you?",
+      "RNN+Att": "It's a nice weather time today.",
+      "LSTM+Att": "It's a good weather today.",
+      "GRU+Att": "It's very nice today.",
+      "Transformer": "It's a good weather today."
+    }
+  },
+  {
+    "src": "你 在 做 什么",
+    "ref": "What are you doing",
+    "hyps": {
+      "RNN": "I don't know what I have to go to the station.",
+      "LSTM": "What are you doing in Boston?",
+      "GRU": "What are you doing in your country?",
+      "RNN+Att": "What are you doing at your time.",
+      "LSTM+Att": "What're you doing what",
+      "GRU+Att": "What were you doing is doing at that time?",
+      "Transformer": "You're doing anything right away."
+    }
+  },
+  {
+    "src": "我 想 回家",
+    "ref": "I want to go home",
+    "hyps": {
+      "RNN": "I don't know what I have to go to the station.",
+      "LSTM": "I want to buy a car.",
+      "GRU": "I'd like to go home because because it's raining.",
+      "RNN+Att": "I want to go home a secret.",
+      "LSTM+Att": "I'd like to go home.",
+      "GRU+Att": "I'd like to go home going home.",
+      "Transformer": "I want to go home."
+    }
+  },
+  {
+    "src": "他 想 亲 她 。",
+    "ref": "He wants to kiss her.",
+    "hyps": {
+      "RNN": "I don't know what I have to go to the station.",
+      "LSTM": "He wants to do her homework.",
+      "GRU": "He wants to leave her hair cut.",
+      "RNN+Att": "He wants to miss her so much she loves her.",
+      "LSTM+Att": "She wants to marry her to marry her.",
+      "GRU+Att": "He wants to marry her.",
+      "Transformer": "He wants to kissed her eyes."
+    }
+  },
+  {
+    "src": "九點 以後打 電話 比 較 便宜 嗎 ？",
+    "ref": "Is it cheaper to call after 9:00?",
+    "hyps": {
+      "RNN": "I don't know what I have to go to the station.",
+      "LSTM": "Is this jacket and then now and have the windows.",
+      "GRU": "Is there a supermarket in the weather will be fine tomorrow?",
+      "RNN+Att": "Is it three years is three years older than three women",
+      "LSTM+Att": "Is there six six than the hotel?",
+      "GRU+Att": "Is it more than any more than any more time?",
+      "Transformer": "Is bungee jumping newspaper, than nine?"
+    }
+  },
+  {
+    "src": "他们 不 需要 理由 。",
+    "ref": "They don't need a reason.",
+    "hyps": {
+      "RNN": "I don't know what I have to go to the station.",
+      "LSTM": "They don't need to be going.",
+      "GRU": "They didn't tell anyone Tom.",
+      "RNN+Att": "They don't need to be a wreck.",
+      "LSTM+Att": "They don't need to go out of water.",
+      "GRU+Att": "They don't need any need of need to eat.",
+      "Transformer": "They don't have to have reason so."
+    }
+  },
+  {
+    "src": "紅綠燈 一直 在 運作 。",
+    "ref": "Traffic lights work all the time.",
+    "hyps": {
+      "RNN": "I don't know what I have to go to the station.",
+      "LSTM": "It's been here to the station at six.",
+      "GRU": "The dog followed the bear's tracks.",
+      "RNN+Att": "The always has always been smart.",
+      "LSTM+Att": "The rain was in time to the wall.",
+      "GRU+Att": "The second has been raining this week.",
+      "Transformer": "The light is not flying kites."
+    }
+  },
+  {
+    "src": "說 英語 很 難 嗎 ?",
+    "ref": "Is it hard to speak English?",
+    "hyps": {
+      "RNN": "I don't know what I have to go to the station.",
+      "LSTM": "Are you sure that will happen in Japan?",
+      "GRU": "Is there a bus rain for us?",
+      "RNN+Att": "Are you speak English?",
+      "LSTM+Att": "Speaking English is going English?",
+      "GRU+Att": "English is hard to speak English?",
+      "Transformer": "Is that difficult difficult to speak French?"
+    }
+  }
+]

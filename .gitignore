@@ -1,4 +1,5 @@
 .kiro
 *.pyc
 __pycache__
+scripts/fonts
 checkpoints

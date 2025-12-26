@@ -1,129 +1,129 @@
 配置: {'model_type': 'lstm', 'use_attention': True, 'device': 'cuda', 'batch_size': 256, 'lr': 0.001, 'num_epoch': 20}
-开始训练: 2025-12-26 17:32:17
+开始训练: 2025-12-26 22:51:33
 
 === Epoch 1/20 ===
-Loss: 5.9271, BLEU: 0.77, 累计时间: 18.6s
+Loss: 5.9365, BLEU: 0.76, 累计时间: 17.7s
 Ref: Why are you [UNK] my son?
-Hyp: Do you have to go to the
+Hyp: Do you have to do you
 保存模型到 checkpoints/lstm_attn_best.pt
 
 === Epoch 2/20 ===
-Loss: 4.5592, BLEU: 2.98, 累计时间: 37.5s
+Loss: 4.5708, BLEU: 3.09, 累计时间: 37.4s
 Ref: Why are you [UNK] my son?
 Hyp: Why do you like to do
 保存模型到 checkpoints/lstm_attn_best.pt
 
 === Epoch 3/20 ===
-Loss: 3.7189, BLEU: 4.58, 累计时间: 56.1s
+Loss: 3.7418, BLEU: 5.05, 累计时间: 55.6s
 Ref: Why are you [UNK] my son?
 Hyp: Why did you do you to me?
 保存模型到 checkpoints/lstm_attn_best.pt
 
 === Epoch 4/20 ===
-Loss: 3.0512, BLEU: 7.03, 累计时间: 74.4s
+Loss: 3.1173, BLEU: 6.31, 累计时间: 74.8s
 Ref: Why are you [UNK] my son?
-Hyp: Why did you tell me the book?
+Hyp: Why did you tell me the Why
 保存模型到 checkpoints/lstm_attn_best.pt
 
 === Epoch 5/20 ===
-Loss: 2.5083, BLEU: 9.27, 累计时间: 94.3s
+Loss: 2.6172, BLEU: 9.16, 累计时间: 93.8s
 Ref: Why are you [UNK] my son?
-Hyp: Why did you tell me the truth?
+Hyp: Why did you do you to me?
 保存模型到 checkpoints/lstm_attn_best.pt
 
 === Epoch 6/20 ===
-Loss: 2.0610, BLEU: 11.32, 累计时间: 114.3s
+Loss: 2.1951, BLEU: 11.26, 累计时间: 114.1s
 Ref: Why are you [UNK] my son?
 Hyp: Why did you come to me?
 保存模型到 checkpoints/lstm_attn_best.pt
 
 === Epoch 7/20 ===
-Loss: 1.6836, BLEU: 12.65, 累计时间: 132.7s
+Loss: 1.8298, BLEU: 12.28, 累计时间: 132.6s
 Ref: Why are you [UNK] my son?
-Hyp: Why are you being my father?
+Hyp: Why are you being me?
 保存模型到 checkpoints/lstm_attn_best.pt
 
 === Epoch 8/20 ===
-Loss: 1.3838, BLEU: 15.16, 累计时间: 152.8s
+Loss: 1.5214, BLEU: 14.27, 累计时间: 151.9s
 Ref: Why are you [UNK] my son?
 Hyp: Why did you come to me?
 保存模型到 checkpoints/lstm_attn_best.pt
 
 === Epoch 9/20 ===
-Loss: 1.1461, BLEU: 15.24, 累计时间: 170.5s
+Loss: 1.2627, BLEU: 14.77, 累计时间: 170.1s
 Ref: Why are you [UNK] my son?
-Hyp: Why did you come to the police me?
+Hyp: Why did you come to me?
 保存模型到 checkpoints/lstm_attn_best.pt
 
 === Epoch 10/20 ===
-Loss: 0.9546, BLEU: 15.99, 累计时间: 189.9s
+Loss: 1.0512, BLEU: 15.30, 累计时间: 189.3s
 Ref: Why are you [UNK] my son?
 Hyp: Why did you come to me?
 保存模型到 checkpoints/lstm_attn_best.pt
 
 === Epoch 11/20 ===
-Loss: 0.7978, BLEU: 17.00, 累计时间: 207.2s
+Loss: 0.8756, BLEU: 16.68, 累计时间: 207.1s
 Ref: Why are you [UNK] my son?
-Hyp: Why did you come to me?
+Hyp: Why did you call me the book?
 保存模型到 checkpoints/lstm_attn_best.pt
 
 === Epoch 12/20 ===
-Loss: 0.6680, BLEU: 17.74, 累计时间: 226.0s
+Loss: 0.7289, BLEU: 18.04, 累计时间: 226.9s
 Ref: Why are you [UNK] my son?
-Hyp: Why did you come to me?
+Hyp: Why are you being afraid of me?
 保存模型到 checkpoints/lstm_attn_best.pt
 
 === Epoch 13/20 ===
-Loss: 0.5613, BLEU: 19.30, 累计时间: 243.2s
+Loss: 0.6069, BLEU: 18.21, 累计时间: 245.2s
 Ref: Why are you [UNK] my son?
-Hyp: Why did you come to visit me?
+Hyp: Why are you being afraid of being me?
 保存模型到 checkpoints/lstm_attn_best.pt
 
 === Epoch 14/20 ===
-Loss: 0.4721, BLEU: 18.52, 累计时间: 262.9s
+Loss: 0.5047, BLEU: 18.72, 累计时间: 264.5s
 Ref: Why are you [UNK] my son?
-Hyp: Why did you visit me?
-无提升 (1/5)
+Hyp: Why are you coming to the money?
+保存模型到 checkpoints/lstm_attn_best.pt
 
 === Epoch 15/20 ===
-Loss: 0.3985, BLEU: 19.07, 累计时间: 279.9s
-Ref: Why are you [UNK] my son?
-Hyp: Why did you marry me?
-无提升 (2/5)
-
-=== Epoch 16/20 ===
-Loss: 0.3391, BLEU: 19.11, 累计时间: 297.0s
-Ref: Why are you [UNK] my son?
-Hyp: Why did you marry me?
-无提升 (3/5)
-
-=== Epoch 17/20 ===
-Loss: 0.2886, BLEU: 20.01, 累计时间: 315.7s
+Loss: 0.4192, BLEU: 19.16, 累计时间: 284.5s
 Ref: Why are you [UNK] my son?
 Hyp: Why did you come to me?
 保存模型到 checkpoints/lstm_attn_best.pt
 
-=== Epoch 18/20 ===
-Loss: 0.2485, BLEU: 19.74, 累计时间: 333.5s
+=== Epoch 16/20 ===
+Loss: 0.3493, BLEU: 19.01, 累计时间: 302.1s
 Ref: Why are you [UNK] my son?
-Hyp: Why did you come to the truth?
+Hyp: Why did you come to me?
+无提升 (1/5)
+
+=== Epoch 17/20 ===
+Loss: 0.2911, BLEU: 19.75, 累计时间: 320.4s
+Ref: Why are you [UNK] my son?
+Hyp: Why do you call me the money?
+保存模型到 checkpoints/lstm_attn_best.pt
+
+=== Epoch 18/20 ===
+Loss: 0.2468, BLEU: 19.35, 累计时间: 339.7s
+Ref: Why are you [UNK] my son?
+Hyp: Why are you coming to the school by me?
 无提升 (1/5)
 
 === Epoch 19/20 ===
-Loss: 0.2165, BLEU: 19.95, 累计时间: 350.7s
+Loss: 0.2104, BLEU: 19.82, 累计时间: 358.7s
 Ref: Why are you [UNK] my son?
-Hyp: Why did you marry me?
-无提升 (2/5)
+Hyp: Why do you come to me?
+保存模型到 checkpoints/lstm_attn_best.pt
 
 === Epoch 20/20 ===
-Loss: 0.1908, BLEU: 19.59, 累计时间: 369.3s
+Loss: 0.1824, BLEU: 20.20, 累计时间: 377.4s
 Ref: Why are you [UNK] my son?
-Hyp: Why did you visit me the truth?
-无提升 (3/5)
+Hyp: Why do you call the school come
+保存模型到 checkpoints/lstm_attn_best.pt
 
 === 测试 ===
-Test BLEU: 19.09
-Best Valid BLEU: 20.01
+Test BLEU: 17.37
+Best Valid BLEU: 20.20
 结果保存到: logs/lstm_attn.json
 日志保存到: logs/lstm_attn.log
 图表保存到: figures/curves_lstm_attn.png
