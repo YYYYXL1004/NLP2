@@ -321,3 +321,93 @@ bash scripts/exp3_transformer.sh
 4. **训练效率**: 不同模型的时间/显存开销对比
 5. **收敛速度**: Loss下降曲线对比分析
 
+
+
+---
+
+## 消融实验设计
+
+### 消融实验1: Hidden Size 对 LSTM+Att 的影响
+
+**目的**: 分析隐藏层维度对模型性能的影响
+
+| 实验编号 | Hidden Size | Embedding Dim | 命令 |
+|----------|-------------|---------------|------|
+| Abl1-1 | 128 | 128 | `python train.py --model_type lstm --use_attention --hidden_size 128 --embedding_dim 128` |
+| Abl1-2 | 256 | 256 | `python train.py --model_type lstm --use_attention --hidden_size 256 --embedding_dim 256` |
+| Abl1-3 | 512 | 512 | `python train.py --model_type lstm --use_attention --hidden_size 512 --embedding_dim 512` |
+
+**结果记录**:
+
+| Hidden Size | 参数量 | 训练时间 | 验证BLEU | 测试BLEU |
+|-------------|--------|----------|----------|----------|
+| 128 | | | | |
+| 256 | | | | |
+| 512 | | | | |
+
+**预期**: 256可能是最优，512可能过拟合
+
+---
+
+### 消融实验2: Transformer 层数的影响
+
+**目的**: 分析编码器/解码器层数对性能的影响
+
+| 实验编号 | Num Layers | 命令 |
+|----------|------------|------|
+| Abl2-1 | 1 | `python train.py --model_type transformer --num_layers 1` |
+| Abl2-2 | 2 | `python train.py --model_type transformer --num_layers 2` |
+| Abl2-3 | 3 | `python train.py --model_type transformer --num_layers 3` |
+| Abl2-4 | 4 | `python train.py --model_type transformer --num_layers 4` |
+
+**结果记录**:
+
+| Num Layers | 参数量 | 训练时间 | 验证BLEU | 测试BLEU |
+|------------|--------|----------|----------|----------|
+| 1 | | | | |
+| 2 | | | | |
+| 3 | | | | |
+| 4 | | | | |
+
+**预期**: 3层效果最好，4层可能过拟合（数据量小）
+
+---
+
+### 消融实验3: Transformer 注意力头数的影响
+
+**目的**: 分析多头注意力的头数对性能的影响
+
+| 实验编号 | Num Heads | 命令 |
+|----------|-----------|------|
+| Abl3-1 | 1 | `python train.py --model_type transformer --num_heads 1` |
+| Abl3-2 | 4 | `python train.py --model_type transformer --num_heads 4` |
+| Abl3-3 | 8 | `python train.py --model_type transformer --num_heads 8` |
+
+**结果记录**:
+
+| Num Heads | 训练时间 | 验证BLEU | 测试BLEU |
+|-----------|----------|----------|----------|
+| 1 | | | |
+| 4 | | | |
+| 8 | | | |
+
+**预期**: 多头优于单头，8头可能略优于4头
+
+---
+
+### 消融实验执行
+
+```bash
+bash scripts/exp_ablation.sh
+```
+
+---
+
+## 可视化脚本
+
+| 脚本 | 功能 | 输出 |
+|------|------|------|
+| `scripts/plot_comparison.py` | Loss/BLEU曲线对比 | `figures/loss_comparison.png`, `figures/bleu_comparison.png` |
+| `scripts/plot_attention.py` | Attention热力图 | `figures/attention_*.png` |
+| `scripts/case_analysis.py` | 翻译案例对比 | `figures/case_analysis.json` |
+
