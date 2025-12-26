@@ -51,7 +51,7 @@ class MultiHeadAttention(nn.Module):
         # scaled dot-product attention
         scores = torch.matmul(Q, K.transpose(-2, -1)) / math.sqrt(self.d_k)
         if mask is not None:
-            scores = scores.masked_fill(mask == 0, float('-inf'))
+            scores = scores.masked_fill(mask == 0, -1e9)  # 用大负数代替-inf，避免nan
         
         attn = self.dropout(F.softmax(scores, dim=-1))
         out = torch.matmul(attn, V)
@@ -147,11 +147,11 @@ class TransformerSeq2Seq(nn.Module):
         return (src != self.pad_idx).unsqueeze(1).unsqueeze(2)
     
     def make_tgt_mask(self, tgt):
-        """padding mask + causal mask (下三角)"""
-        bs, tgt_len = tgt.size()
-        pad_mask = (tgt != self.pad_idx).unsqueeze(1).unsqueeze(2)
-        causal_mask = torch.tril(torch.ones(tgt_len, tgt_len, device=tgt.device)).unsqueeze(0).unsqueeze(0)
-        return pad_mask & (causal_mask.bool())
+        """causal mask (下三角) - 推理时不需要padding mask因为没有pad"""
+        tgt_len = tgt.size(1)
+        # 只用因果掩码，形状 (1, 1, tgt_len, tgt_len)
+        causal_mask = torch.tril(torch.ones(tgt_len, tgt_len, device=tgt.device)).bool()
+        return causal_mask.unsqueeze(0).unsqueeze(0)
     
     def encode(self, src, src_mask):
         x = self.pos_enc(self.src_embed(src) * math.sqrt(self.d_model))
@@ -175,6 +175,7 @@ class TransformerSeq2Seq(nn.Module):
     
     def predict(self, src):
         """推理: 自回归逐词生成"""
+        self.eval()  # 确保eval模式
         bs = src.size(0)
         device = src.device
         src_mask = self.make_src_mask(src)
@@ -185,7 +186,8 @@ class TransformerSeq2Seq(nn.Module):
         for _ in range(self.max_len - 1):
             tgt_mask = self.make_tgt_mask(tgt)
             dec_out = self.decode(tgt, enc_out, tgt_mask, src_mask)
-            next_tok = self.out_proj(dec_out[:, -1, :]).argmax(dim=-1, keepdim=True)
+            logits = self.out_proj(dec_out[:, -1, :])
+            next_tok = logits.argmax(dim=-1, keepdim=True)
             tgt = torch.cat([tgt, next_tok], dim=1)
             if (next_tok == self.eos_idx).all():
                 break

@@ -1,0 +1,129 @@
+配置: {'model_type': 'gru', 'use_attention': True, 'device': 'cuda', 'batch_size': 256, 'lr': 0.001, 'num_epoch': 20}
+开始训练: 2025-12-26 17:38:37
+
+=== Epoch 1/20 ===
+Loss: 5.7436, BLEU: 1.50, 累计时间: 18.7s
+Ref: Why are you [UNK] my son?
+Hyp: Do you know to do you like
+保存模型到 checkpoints/gru_attn_best.pt
+
+=== Epoch 2/20 ===
+Loss: 4.2241, BLEU: 3.96, 累计时间: 36.1s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you tell me to me?
+保存模型到 checkpoints/gru_attn_best.pt
+
+=== Epoch 3/20 ===
+Loss: 3.3700, BLEU: 6.79, 累计时间: 53.1s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you give me the piano?
+保存模型到 checkpoints/gru_attn_best.pt
+
+=== Epoch 4/20 ===
+Loss: 2.7148, BLEU: 9.25, 累计时间: 69.8s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you give me the truth?
+保存模型到 checkpoints/gru_attn_best.pt
+
+=== Epoch 5/20 ===
+Loss: 2.1747, BLEU: 12.71, 累计时间: 86.4s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you give me the money?
+保存模型到 checkpoints/gru_attn_best.pt
+
+=== Epoch 6/20 ===
+Loss: 1.7252, BLEU: 15.18, 累计时间: 104.2s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you give me the money?
+保存模型到 checkpoints/gru_attn_best.pt
+
+=== Epoch 7/20 ===
+Loss: 1.3625, BLEU: 17.27, 累计时间: 120.4s
+Ref: Why are you [UNK] my son?
+Hyp: Why do you resent with me?
+保存模型到 checkpoints/gru_attn_best.pt
+
+=== Epoch 8/20 ===
+Loss: 1.0822, BLEU: 18.17, 累计时间: 138.0s
+Ref: Why are you [UNK] my son?
+Hyp: How old do you give me the truth?
+保存模型到 checkpoints/gru_attn_best.pt
+
+=== Epoch 9/20 ===
+Loss: 0.8644, BLEU: 19.10, 累计时间: 154.4s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you give me the money?
+保存模型到 checkpoints/gru_attn_best.pt
+
+=== Epoch 10/20 ===
+Loss: 0.6954, BLEU: 19.77, 累计时间: 171.2s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you give me the money?
+保存模型到 checkpoints/gru_attn_best.pt
+
+=== Epoch 11/20 ===
+Loss: 0.5616, BLEU: 20.38, 累计时间: 186.4s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you get me the money?
+保存模型到 checkpoints/gru_attn_best.pt
+
+=== Epoch 12/20 ===
+Loss: 0.4565, BLEU: 21.20, 累计时间: 203.5s
+Ref: Why are you [UNK] my son?
+Hyp: Why do you resent with me?
+保存模型到 checkpoints/gru_attn_best.pt
+
+=== Epoch 13/20 ===
+Loss: 0.3746, BLEU: 21.22, 累计时间: 222.1s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you give me your pencil?
+保存模型到 checkpoints/gru_attn_best.pt
+
+=== Epoch 14/20 ===
+Loss: 0.3101, BLEU: 21.18, 累计时间: 240.6s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you come with me?
+无提升 (1/5)
+
+=== Epoch 15/20 ===
+Loss: 0.2612, BLEU: 21.71, 累计时间: 257.5s
+Ref: Why are you [UNK] my son?
+Hyp: Why do you want me to the station?
+保存模型到 checkpoints/gru_attn_best.pt
+
+=== Epoch 16/20 ===
+Loss: 0.2240, BLEU: 21.70, 累计时间: 276.2s
+Ref: Why are you [UNK] my son?
+Hyp: Why do you resent my son
+无提升 (1/5)
+
+=== Epoch 17/20 ===
+Loss: 0.1949, BLEU: 22.04, 累计时间: 293.0s
+Ref: Why are you [UNK] my son?
+Hyp: How old you do my son for me?
+保存模型到 checkpoints/gru_attn_best.pt
+
+=== Epoch 18/20 ===
+Loss: 0.1728, BLEU: 21.08, 累计时间: 311.4s
+Ref: Why are you [UNK] my son?
+Hyp: Why do you resent my son.
+无提升 (1/5)
+
+=== Epoch 19/20 ===
+Loss: 0.1545, BLEU: 21.86, 累计时间: 328.0s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you come to me?
+无提升 (2/5)
+
+=== Epoch 20/20 ===
+Loss: 0.1402, BLEU: 22.54, 累计时间: 344.6s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you use my son a car?
+保存模型到 checkpoints/gru_attn_best.pt
+
+=== 测试 ===
+Test BLEU: 20.26
+Best Valid BLEU: 22.54
+结果保存到: logs/gru_attn.json
+日志保存到: logs/gru_attn.log
+图表保存到: figures/curves_gru_attn.png

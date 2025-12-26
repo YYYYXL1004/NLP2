@@ -27,9 +27,9 @@ def get_model(args, src_vocab, tgt_vocab):
             d_model=args.embedding_dim, num_heads=args.num_heads,
             num_layers=args.num_layers, d_ff=args.d_ff,
             dropout=args.dropout, max_len=args.max_len + 2,
-            pad_idx=src_vocab.word2idx['[PAD]'],
-            bos_idx=src_vocab.word2idx['[BOS]'],
-            eos_idx=src_vocab.word2idx['[EOS]']
+            pad_idx=tgt_vocab.word2idx['[PAD]'],
+            bos_idx=tgt_vocab.word2idx['[BOS]'],
+            eos_idx=tgt_vocab.word2idx['[EOS]']
         )
     
     models = {
@@ -41,7 +41,7 @@ def get_model(args, src_vocab, tgt_vocab):
     return cls(src_vocab, tgt_vocab, args.embedding_dim, args.hidden_size, args.max_len + 2)
 
 
-def train_epoch(model, optimizer, criterion, loader, device):
+def train_epoch(model, optimizer, criterion, loader, device, scheduler=None):
     """训练一个epoch"""
     model.train()
     total_loss = 0
@@ -54,6 +54,8 @@ def train_epoch(model, optimizer, criterion, loader, device):
         loss.backward()
         nn.utils.clip_grad_norm_(model.parameters(), 1)  # 梯度裁剪
         optimizer.step()
+        if scheduler:
+            scheduler.step()
         total_loss += loss.item()
     return total_loss / len(loader)
 
@@ -124,10 +126,22 @@ def main():
     print(f"参数量: {sum(p.numel() for p in model.parameters() if p.requires_grad):,}")
     
     # 优化器和损失
-    optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
+    optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, betas=(0.9, 0.98), eps=1e-9)
     weights = torch.ones(len(en_vocab), device=device)
     weights[en_vocab.word2idx['[PAD]']] = 0
     criterion = nn.NLLLoss(weight=weights)
+    
+    # Transformer使用warmup scheduler
+    if args.model_type == 'transformer':
+        # 使用固定warmup: 前1000步线性增加到lr，之后保持
+        warmup_steps = 1000
+        def lr_lambda(step):
+            if step < warmup_steps:
+                return float(step) / float(max(1, warmup_steps))
+            return 1.0
+        scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda)
+    else:
+        scheduler = None
     
     # 日志和可视化
     os.makedirs(args.save_dir, exist_ok=True)
@@ -144,7 +158,7 @@ def main():
     
     for epoch in range(args.num_epoch):
         print(f"\n=== Epoch {epoch+1}/{args.num_epoch} ===")
-        train_loss = train_epoch(model, optimizer, criterion, trainloader, device)
+        train_loss = train_epoch(model, optimizer, criterion, trainloader, device, scheduler)
         hyps, refs, valid_bleu = evaluate(model, validloader, en_vocab, device)
         
         # 记录日志

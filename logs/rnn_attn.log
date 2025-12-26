@@ -1,0 +1,129 @@
+配置: {'model_type': 'rnn', 'use_attention': True, 'device': 'cuda', 'batch_size': 256, 'lr': 0.001, 'num_epoch': 20}
+开始训练: 2025-12-26 17:28:03
+
+=== Epoch 1/20 ===
+Loss: 5.6832, BLEU: 1.43, 累计时间: 13.2s
+Ref: Why are you [UNK] my son?
+Hyp: You should have a good
+保存模型到 checkpoints/rnn_attn_best.pt
+
+=== Epoch 2/20 ===
+Loss: 4.2605, BLEU: 3.51, 累计时间: 26.4s
+Ref: Why are you [UNK] my son?
+Hyp: How do you want to do you want to do?
+保存模型到 checkpoints/rnn_attn_best.pt
+
+=== Epoch 3/20 ===
+Loss: 3.5341, BLEU: 5.09, 累计时间: 38.6s
+Ref: Why are you [UNK] my son?
+Hyp: Why do you want to me?
+保存模型到 checkpoints/rnn_attn_best.pt
+
+=== Epoch 4/20 ===
+Loss: 2.9562, BLEU: 7.92, 累计时间: 51.1s
+Ref: Why are you [UNK] my son?
+Hyp: Why do you want to do that?
+保存模型到 checkpoints/rnn_attn_best.pt
+
+=== Epoch 5/20 ===
+Loss: 2.4684, BLEU: 10.26, 累计时间: 62.5s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you come to me?
+保存模型到 checkpoints/rnn_attn_best.pt
+
+=== Epoch 6/20 ===
+Loss: 2.0632, BLEU: 11.75, 累计时间: 75.3s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you come to me?
+保存模型到 checkpoints/rnn_attn_best.pt
+
+=== Epoch 7/20 ===
+Loss: 1.7267, BLEU: 13.75, 累计时间: 87.9s
+Ref: Why are you [UNK] my son?
+Hyp: Why do you want me to the window?
+保存模型到 checkpoints/rnn_attn_best.pt
+
+=== Epoch 8/20 ===
+Loss: 1.4579, BLEU: 14.88, 累计时间: 98.8s
+Ref: Why are you [UNK] my son?
+Hyp: Why are you driving the door?
+保存模型到 checkpoints/rnn_attn_best.pt
+
+=== Epoch 9/20 ===
+Loss: 1.2417, BLEU: 15.31, 累计时间: 112.2s
+Ref: Why are you [UNK] my son?
+Hyp: Why do you want me to me?
+保存模型到 checkpoints/rnn_attn_best.pt
+
+=== Epoch 10/20 ===
+Loss: 1.0669, BLEU: 16.32, 累计时间: 123.9s
+Ref: Why are you [UNK] my son?
+Hyp: Why are you driving me?
+保存模型到 checkpoints/rnn_attn_best.pt
+
+=== Epoch 11/20 ===
+Loss: 0.9252, BLEU: 17.24, 累计时间: 134.9s
+Ref: Why are you [UNK] my son?
+Hyp: Why are you giving me?
+保存模型到 checkpoints/rnn_attn_best.pt
+
+=== Epoch 12/20 ===
+Loss: 0.8042, BLEU: 17.50, 累计时间: 147.6s
+Ref: Why are you [UNK] my son?
+Hyp: Why are you driving the phone number?
+保存模型到 checkpoints/rnn_attn_best.pt
+
+=== Epoch 13/20 ===
+Loss: 0.7047, BLEU: 16.98, 累计时间: 160.2s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you come over the window?
+无提升 (1/5)
+
+=== Epoch 14/20 ===
+Loss: 0.6245, BLEU: 18.52, 累计时间: 171.4s
+Ref: Why are you [UNK] my son?
+Hyp: Why are you taking me?
+保存模型到 checkpoints/rnn_attn_best.pt
+
+=== Epoch 15/20 ===
+Loss: 0.5510, BLEU: 18.98, 累计时间: 183.5s
+Ref: Why are you [UNK] my son?
+Hyp: Why do you want me to help?
+保存模型到 checkpoints/rnn_attn_best.pt
+
+=== Epoch 16/20 ===
+Loss: 0.4890, BLEU: 18.21, 累计时间: 196.6s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you come me?
+无提升 (1/5)
+
+=== Epoch 17/20 ===
+Loss: 0.4399, BLEU: 18.50, 累计时间: 208.0s
+Ref: Why are you [UNK] my son?
+Hyp: Why me?
+无提升 (2/5)
+
+=== Epoch 18/20 ===
+Loss: 0.3959, BLEU: 19.13, 累计时间: 220.1s
+Ref: Why are you [UNK] my son?
+Hyp: Why do you come me?
+保存模型到 checkpoints/rnn_attn_best.pt
+
+=== Epoch 19/20 ===
+Loss: 0.3585, BLEU: 19.12, 累计时间: 230.9s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you come me?
+无提升 (1/5)
+
+=== Epoch 20/20 ===
+Loss: 0.3279, BLEU: 19.33, 累计时间: 243.4s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you come me?
+保存模型到 checkpoints/rnn_attn_best.pt
+
+=== 测试 ===
+Test BLEU: 18.13
+Best Valid BLEU: 19.33
+结果保存到: logs/rnn_attn.json
+日志保存到: logs/rnn_attn.log
+图表保存到: figures/curves_rnn_attn.png
