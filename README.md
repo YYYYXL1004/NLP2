@@ -13,7 +13,7 @@
 │   └── 研究报告.md          # 研究报告
 ├── figures/                 # 可视化图表
 ├── logs/                    # 训练日志
-├── checkpoints/             # 模型权重
+├── checkpoints/             # 模型权重 (见下方下载链接)
 ├── scripts/                 # 实验脚本
 │   ├── exp1_rnn_variants.sh    # RNN/LSTM/GRU实验
 │   ├── exp2_attention.sh       # Attention实验
@@ -115,3 +115,11 @@ python scripts/plot_attention.py    # Attention热力图
 - [Understanding LSTM Networks](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
 - [Seq2seq and Attention](https://lena-voita.github.io/nlp_course/seq2seq_and_attention.html)
 - [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/)
+
+## 模型权重下载
+
+训练好的模型权重可从以下链接下载：
+
+[Google Drive - checkpoints](https://drive.google.com/drive/folders/1_cbwjT2lcd3odhqfYYdaLVEq7MGyArDl?usp=drive_link)
+
+下载后将文件放入 `checkpoints/` 目录即可。
