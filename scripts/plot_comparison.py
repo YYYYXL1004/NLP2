@@ -87,26 +87,33 @@ def plot_training_curves(logs):
     plt.close()
 
 
+def get_test_bleu_from_log(name):
+    """从log文件中提取测试集BLEU"""
+    log_path = f"logs/{name}.log"
+    if os.path.exists(log_path):
+        with open(log_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                if 'Test BLEU:' in line:
+                    return float(line.split('Test BLEU:')[1].strip())
+    return 0
+
+
 def plot_final_results(logs):
-    """最终结果柱状图"""
+    """最终结果柱状图 - 使用测试集BLEU"""
     fig, ax = plt.subplots(figsize=(12, 6))
     
     models = ['RNN', 'LSTM', 'GRU', 'RNN+Att', 'LSTM+Att', 'GRU+Att', 'Transformer']
     keys = ['rnn', 'lstm', 'gru', 'rnn_attn', 'lstm_attn', 'gru_attn', 'transformer']
     colors = ['#6baed6', '#6baed6', '#6baed6', '#fd8d3c', '#fd8d3c', '#fd8d3c', '#e6550d']
     
-    bleus = []
-    for k in keys:
-        if k in logs:
-            bleus.append(logs[k]['logs'][-1]['bleu'])
-        else:
-            bleus.append(0)
+    # 从log文件获取测试集BLEU
+    bleus = [get_test_bleu_from_log(k) for k in keys]
     
     bars = ax.bar(models, bleus, color=colors, edgecolor='black', linewidth=1.2)
     
     # 添加数值标签
     for bar, bleu in zip(bars, bleus):
-        ax.annotate(f'{bleu:.1f}', xy=(bar.get_x() + bar.get_width()/2, bar.get_height()),
+        ax.annotate(f'{bleu:.2f}', xy=(bar.get_x() + bar.get_width()/2, bar.get_height()),
                     ha='center', va='bottom', fontsize=11, fontweight='bold')
     
     # 添加分组标注
@@ -117,8 +124,8 @@ def plot_final_results(logs):
     ax.text(6, max(bleus)*0.95, 'Transformer', ha='center', fontsize=10, color='gray')
     
     ax.set_xlabel('Model', fontsize=12)
-    ax.set_ylabel('BLEU Score', fontsize=12)
-    ax.set_title('Final BLEU Score Comparison', fontsize=14)
+    ax.set_ylabel('Test BLEU Score', fontsize=12)
+    ax.set_title('Final Test BLEU Score Comparison', fontsize=14)
     ax.grid(True, alpha=0.3, axis='y')
     
     plt.tight_layout()
