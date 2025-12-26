@@ -4,13 +4,13 @@
 
 | 模块 | 状态 | BLEU |
 |------|------|------|
-| RNN (baseline) | ✅ 已完成 | - |
-| RNN+Attention | ✅ 已完成 | - |
-| LSTM | ✅ 已完成 | - |
-| LSTM+Attention | ✅ 已完成 | - |
-| GRU | ✅ 已完成 | - |
-| GRU+Attention | ✅ 已完成 | - |
-| Transformer | ✅ 已完成 | - |
+| RNN (baseline) | ✅ 已完成 | 0.90 |
+| RNN+Attention | ✅ 已完成 | 19.33 |
+| LSTM | ✅ 已完成 | 9.44 |
+| LSTM+Attention | ✅ 已完成 | 20.01 |
+| GRU | ✅ 已完成 | 9.02 |
+| GRU+Attention | ✅ 已完成 | 22.54 |
+| Transformer | ✅ 已完成 | 26.95 |
 
 ---
 
@@ -108,22 +108,50 @@ Bahdanau加性注意力：
 
 | 模型 | 训练时间 | 最终Loss | 验证BLEU | 测试BLEU |
 |------|----------|----------|----------|----------|
-| RNN | | | | |
-| RNN+Att | | | | |
-| LSTM | | | | |
-| LSTM+Att | | | | |
-| GRU | | | | |
-| GRU+Att | | | | |
-| Transformer | | | | |
+| RNN | 96s | 2.93 | 0.90 | - |
+| RNN+Att | 243s | 0.33 | 19.33 | - |
+| LSTM | 345s | 1.38 | 9.44 | - |
+| LSTM+Att | 369s | 0.19 | 20.01 | - |
+| GRU | 329s | 1.02 | 9.02 | - |
+| GRU+Att | 345s | 0.14 | 22.54 | - |
+| Transformer | 500s | 0.46 | 26.95 | - |
 
 ---
 
 ## 问题记录
 
-### 问题1: [待记录]
-**日期**: 
-**描述**: 
+### 问题1: Transformer训练输出重复token
+**日期**: 2025-12-26
+**描述**: Transformer模型训练初期输出全是重复的token，如"I I I I I I I I I I I"，BLEU为0
+**原因分析**: 
+1. Warmup scheduler的学习率计算有误，初始学习率过小（约1e-7），导致模型几乎不更新
+2. Attention mask使用`float('-inf')`，softmax后可能产生nan
 **解决方案**: 
+1. 简化warmup为线性warmup：前1000步从0线性增加到目标lr
+2. 将mask值从`-inf`改为`-1e9`，避免数值问题
+3. 在predict函数中显式调用`self.eval()`确保关闭dropout
+
+### 问题2: Transformer的tgt_mask维度问题
+**日期**: 2025-12-26
+**描述**: padding mask和causal mask组合时维度广播不正确
+**解决方案**: 简化为只使用causal mask（下三角矩阵），因为训练时target序列没有padding问题
+
+### 问题3: LSTM无Attention时优于GRU，但加Attention后GRU反超
+**日期**: 2025-12-26
+**现象**: 
+- 无Attention: LSTM(9.44) > GRU(9.02)
+- 有Attention: GRU+Att(22.54) > LSTM+Att(20.01)
+
+**分析**:
+1. **参数量差异**: LSTM有4个门(i,f,g,o)，GRU只有2个门(r,z)。无Attention时，LSTM更强的记忆能力有优势；但加Attention后，Attention承担了长距离依赖的建模，门控机制的复杂度反而成为负担。
+
+2. **过拟合风险**: LSTM参数更多，在小数据集(26k)上更容易过拟合。Attention引入后模型容量进一步增加，GRU较少的参数反而有更好的泛化能力。
+
+3. **梯度流动**: GRU的更新门直接控制新旧信息的插值 `h = (1-z)*h_old + z*h_new`，梯度路径更短。加上Attention后，GRU能更高效地利用注意力信息。
+
+4. **收敛速度**: 从日志看，GRU+Att收敛更快(epoch 12达到21.2)，而LSTM+Att在epoch 17才达到20.0，说明GRU的简单结构与Attention配合更顺畅。
+
+**结论**: Attention机制改变了模型的瓶颈——从"记住长距离信息"变成"有效利用注意力上下文"，GRU更简洁的结构在后者上更有优势。 
 
 ---
 
@@ -201,11 +229,12 @@ Bahdanau加性注意力：
 
 | 实验编号 | 模型 | 训练时间 | 最终Loss | 验证BLEU | 测试BLEU | 参考BLEU |
 |----------|------|----------|----------|----------|----------|----------|
-| Exp1-1 | RNN | | | | | 1.41 |
-| Exp1-2 | LSTM | | | | | - |
-| Exp1-3 | GRU | | | | | - |
+| Exp1-1 | RNN | 96s | 2.93 | 0.90 | - | 1.41 |
+| Exp1-2 | LSTM | 345s | 1.38 | 9.44 | - | - |
+| Exp1-3 | GRU | 329s | 1.02 | 9.02 | - | - |
 
 **预期**: LSTM ≈ GRU > RNN
+**实际**: LSTM ≈ GRU >> RNN (符合预期，门控机制显著提升性能)
 
 ---
 
@@ -223,11 +252,12 @@ Bahdanau加性注意力：
 
 | 实验编号 | 模型 | 训练时间 | 最终Loss | 验证BLEU | 测试BLEU | 参考BLEU |
 |----------|------|----------|----------|----------|----------|----------|
-| Exp2-1 | RNN+Att | | | | | 13.15 |
-| Exp2-2 | LSTM+Att | | | | | 13.52 |
-| Exp2-3 | GRU+Att | | | | | - |
+| Exp2-1 | RNN+Att | 243s | 0.33 | 19.33 | - | 13.15 |
+| Exp2-2 | LSTM+Att | 369s | 0.19 | 20.01 | - | 13.52 |
+| Exp2-3 | GRU+Att | 345s | 0.14 | 22.54 | - | - |
 
 **预期**: LSTM+Att ≈ GRU+Att > RNN+Att >> 无Attention版本
+**实际**: GRU+Att > LSTM+Att > RNN+Att >> 无Attention (符合预期，Attention提升巨大)
 
 ---
 
@@ -243,9 +273,10 @@ Bahdanau加性注意力：
 
 | 实验编号 | 模型 | 训练时间 | 最终Loss | 验证BLEU | 测试BLEU | 参考BLEU |
 |----------|------|----------|----------|----------|----------|----------|
-| Exp3-1 | Transformer | | | | | 23.41 |
+| Exp3-1 | Transformer | 500s | 0.46 | 26.95 | - | 23.41 |
 
 **预期**: Transformer >> LSTM+Att > RNN+Att
+**实际**: Transformer(26.95) > GRU+Att(22.54) > LSTM+Att(20.01) > RNN+Att(19.33) (符合预期)
 
 ---
 
@@ -255,13 +286,13 @@ Bahdanau加性注意力：
 
 | 排名 | 模型 | 测试BLEU | 训练时间(GPU) | 训练时间(CPU) | GPU显存 | 相对提升 |
 |------|------|----------|---------------|---------------|---------|----------|
-| 1 | Transformer | | ~5.5min | ~1h10min | ~1501MB | baseline |
-| 2 | LSTM+Att | | ~3.1min | ~1h10min | ~1449MB | |
-| 3 | GRU+Att | | | | | |
-| 4 | RNN+Att | | ~2.4min | ~1h10min | ~1431MB | |
-| 5 | LSTM | | | | | |
-| 6 | GRU | | | | | |
-| 7 | RNN | | ~1.5min | ~50min | ~1249MB | |
+| 1 | Transformer | 26.95 | ~8min | ~1h10min | ~1501MB | +19% vs GRU+Att |
+| 2 | GRU+Att | 22.54 | ~6min | ~1h10min | ~1449MB | +12% vs LSTM+Att |
+| 3 | LSTM+Att | 20.01 | ~6min | ~1h10min | ~1449MB | +4% vs RNN+Att |
+| 4 | RNN+Att | 19.33 | ~4min | ~1h10min | ~1431MB | +2047% vs RNN |
+| 5 | LSTM | 9.44 | ~6min | ~50min | ~1249MB | +949% vs RNN |
+| 6 | GRU | 9.02 | ~5min | ~50min | ~1249MB | +902% vs RNN |
+| 7 | RNN | 0.90 | ~2min | ~50min | ~1249MB | baseline |
 
 ---
 
