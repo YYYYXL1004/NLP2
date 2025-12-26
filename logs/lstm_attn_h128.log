@@ -1,0 +1,129 @@
+配置: {'model_type': 'lstm', 'use_attention': True, 'device': 'cuda', 'batch_size': 256, 'lr': 0.001, 'num_epoch': 20}
+开始训练: 2025-12-26 23:16:34
+
+=== Epoch 1/20 ===
+Loss: 6.3136, BLEU: 0.22, 累计时间: 17.9s
+Ref: Why are you [UNK] my son?
+Hyp: I don't you to the
+保存模型到 checkpoints/lstm_attn_h128_best.pt
+
+=== Epoch 2/20 ===
+Loss: 5.2400, BLEU: 0.66, 累计时间: 34.6s
+Ref: Why are you [UNK] my son?
+Hyp: What you you to do you
+保存模型到 checkpoints/lstm_attn_h128_best.pt
+
+=== Epoch 3/20 ===
+Loss: 4.6723, BLEU: 1.59, 累计时间: 53.2s
+Ref: Why are you [UNK] my son?
+Hyp: Do you know this
+保存模型到 checkpoints/lstm_attn_h128_best.pt
+
+=== Epoch 4/20 ===
+Loss: 4.2108, BLEU: 2.59, 累计时间: 71.7s
+Ref: Why are you [UNK] my son?
+Hyp: Do you know that you have to me?
+保存模型到 checkpoints/lstm_attn_h128_best.pt
+
+=== Epoch 5/20 ===
+Loss: 3.8311, BLEU: 3.37, 累计时间: 90.8s
+Ref: Why are you [UNK] my son?
+Hyp: Do you know that I don't want to me?
+保存模型到 checkpoints/lstm_attn_h128_best.pt
+
+=== Epoch 6/20 ===
+Loss: 3.5062, BLEU: 3.97, 累计时间: 109.6s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you know how to me?
+保存模型到 checkpoints/lstm_attn_h128_best.pt
+
+=== Epoch 7/20 ===
+Loss: 3.2234, BLEU: 5.05, 累计时间: 129.6s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you know me?
+保存模型到 checkpoints/lstm_attn_h128_best.pt
+
+=== Epoch 8/20 ===
+Loss: 2.9702, BLEU: 5.66, 累计时间: 148.3s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you get me to me?
+保存模型到 checkpoints/lstm_attn_h128_best.pt
+
+=== Epoch 9/20 ===
+Loss: 2.7419, BLEU: 6.30, 累计时间: 166.7s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you get me?
+保存模型到 checkpoints/lstm_attn_h128_best.pt
+
+=== Epoch 10/20 ===
+Loss: 2.5309, BLEU: 6.79, 累计时间: 184.4s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you get me?
+保存模型到 checkpoints/lstm_attn_h128_best.pt
+
+=== Epoch 11/20 ===
+Loss: 2.3375, BLEU: 7.23, 累计时间: 202.9s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you get me?
+保存模型到 checkpoints/lstm_attn_h128_best.pt
+
+=== Epoch 12/20 ===
+Loss: 2.1635, BLEU: 7.99, 累计时间: 221.2s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you get me?
+保存模型到 checkpoints/lstm_attn_h128_best.pt
+
+=== Epoch 13/20 ===
+Loss: 2.0023, BLEU: 8.44, 累计时间: 238.5s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you get me?
+保存模型到 checkpoints/lstm_attn_h128_best.pt
+
+=== Epoch 14/20 ===
+Loss: 1.8547, BLEU: 8.58, 累计时间: 255.7s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you get me?
+保存模型到 checkpoints/lstm_attn_h128_best.pt
+
+=== Epoch 15/20 ===
+Loss: 1.7203, BLEU: 10.10, 累计时间: 274.1s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you get me?
+保存模型到 checkpoints/lstm_attn_h128_best.pt
+
+=== Epoch 16/20 ===
+Loss: 1.5976, BLEU: 10.02, 累计时间: 292.3s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you call me?
+无提升 (1/5)
+
+=== Epoch 17/20 ===
+Loss: 1.4848, BLEU: 10.28, 累计时间: 309.0s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you call me?
+保存模型到 checkpoints/lstm_attn_h128_best.pt
+
+=== Epoch 18/20 ===
+Loss: 1.3838, BLEU: 10.70, 累计时间: 328.5s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you call me?
+保存模型到 checkpoints/lstm_attn_h128_best.pt
+
+=== Epoch 19/20 ===
+Loss: 1.2883, BLEU: 11.27, 累计时间: 345.9s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you call me him?
+保存模型到 checkpoints/lstm_attn_h128_best.pt
+
+=== Epoch 20/20 ===
+Loss: 1.2023, BLEU: 12.29, 累计时间: 363.4s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you call me him?
+保存模型到 checkpoints/lstm_attn_h128_best.pt
+
+=== 测试 ===
+Test BLEU: 11.61
+Best Valid BLEU: 12.29
+结果保存到: logs/lstm_attn_h128.json
+日志保存到: logs/lstm_attn_h128.log
+图表保存到: figures/curves_lstm_attn_h128.png

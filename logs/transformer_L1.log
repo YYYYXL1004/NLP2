@@ -1,0 +1,129 @@
+配置: {'model_type': 'transformer', 'use_attention': False, 'device': 'cuda', 'batch_size': 256, 'lr': 0.001, 'num_epoch': 20}
+开始训练: 2025-12-26 23:38:13
+
+=== Epoch 1/20 ===
+Loss: 8.6728, BLEU: 0.00, 累计时间: 5.8s
+Ref: Why are you [UNK] my son?
+Hyp: 
+无提升 (1/5)
+
+=== Epoch 2/20 ===
+Loss: 6.6199, BLEU: 0.12, 累计时间: 17.4s
+Ref: Why are you [UNK] my son?
+Hyp: I you to to to the
+保存模型到 checkpoints/transformer_L1_best.pt
+
+=== Epoch 3/20 ===
+Loss: 5.2221, BLEU: 1.23, 累计时间: 31.0s
+Ref: Why are you [UNK] my son?
+Hyp: You have to you have to go to the
+保存模型到 checkpoints/transformer_L1_best.pt
+
+=== Epoch 4/20 ===
+Loss: 4.3479, BLEU: 2.84, 累计时间: 48.0s
+Ref: Why are you [UNK] my son?
+Hyp: Do you have a lot of my room.
+保存模型到 checkpoints/transformer_L1_best.pt
+
+=== Epoch 5/20 ===
+Loss: 3.7048, BLEU: 5.46, 累计时间: 62.4s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you have a lot of me?
+保存模型到 checkpoints/transformer_L1_best.pt
+
+=== Epoch 6/20 ===
+Loss: 3.1600, BLEU: 7.77, 累计时间: 76.5s
+Ref: Why are you [UNK] my son?
+Hyp: Why are you my favorite car?
+保存模型到 checkpoints/transformer_L1_best.pt
+
+=== Epoch 7/20 ===
+Loss: 2.6711, BLEU: 11.77, 累计时间: 89.8s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you lend me a car?
+保存模型到 checkpoints/transformer_L1_best.pt
+
+=== Epoch 8/20 ===
+Loss: 2.2193, BLEU: 16.06, 累计时间: 103.5s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you hear my son.
+保存模型到 checkpoints/transformer_L1_best.pt
+
+=== Epoch 9/20 ===
+Loss: 1.8214, BLEU: 20.64, 累计时间: 115.9s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you pass my son.
+保存模型到 checkpoints/transformer_L1_best.pt
+
+=== Epoch 10/20 ===
+Loss: 1.4713, BLEU: 22.18, 累计时间: 128.9s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you check my son to me?
+保存模型到 checkpoints/transformer_L1_best.pt
+
+=== Epoch 11/20 ===
+Loss: 1.1703, BLEU: 24.79, 累计时间: 141.1s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you check my son to me?
+保存模型到 checkpoints/transformer_L1_best.pt
+
+=== Epoch 12/20 ===
+Loss: 0.9142, BLEU: 25.66, 累计时间: 153.5s
+Ref: Why are you [UNK] my son?
+Hyp: Why took my son a private car?
+保存模型到 checkpoints/transformer_L1_best.pt
+
+=== Epoch 13/20 ===
+Loss: 0.7172, BLEU: 26.35, 累计时间: 166.0s
+Ref: Why are you [UNK] my son?
+Hyp: Why did you check my son to me?
+保存模型到 checkpoints/transformer_L1_best.pt
+
+=== Epoch 14/20 ===
+Loss: 0.5723, BLEU: 26.81, 累计时间: 179.8s
+Ref: Why are you [UNK] my son?
+Hyp: Why are you accused of my son's dog?
+保存模型到 checkpoints/transformer_L1_best.pt
+
+=== Epoch 15/20 ===
+Loss: 0.4665, BLEU: 26.75, 累计时间: 192.2s
+Ref: Why are you [UNK] my son?
+Hyp: Why wasn't you show my son's dog?
+无提升 (1/5)
+
+=== Epoch 16/20 ===
+Loss: 0.3966, BLEU: 26.45, 累计时间: 204.8s
+Ref: Why are you [UNK] my son?
+Hyp: Why is your son accused of my son?
+无提升 (2/5)
+
+=== Epoch 17/20 ===
+Loss: 0.3525, BLEU: 26.62, 累计时间: 216.9s
+Ref: Why are you [UNK] my son?
+Hyp: Why are you burning my son like?
+无提升 (3/5)
+
+=== Epoch 18/20 ===
+Loss: 0.3167, BLEU: 26.42, 累计时间: 230.9s
+Ref: Why are you [UNK] my son?
+Hyp: Why are you accused my son's picture?
+无提升 (4/5)
+
+=== Epoch 19/20 ===
+Loss: 0.2958, BLEU: 27.23, 累计时间: 243.6s
+Ref: Why are you [UNK] my son?
+Hyp: Why are you accused my son of me?
+保存模型到 checkpoints/transformer_L1_best.pt
+
+=== Epoch 20/20 ===
+Loss: 0.2716, BLEU: 27.28, 累计时间: 256.3s
+Ref: Why are you [UNK] my son?
+Hyp: Why are you accused my son of me?
+保存模型到 checkpoints/transformer_L1_best.pt
+
+=== 测试 ===
+Test BLEU: 25.99
+Best Valid BLEU: 27.28
+结果保存到: logs/transformer_L1.json
+日志保存到: logs/transformer_L1.log
+图表保存到: figures/curves_transformer_L1.png

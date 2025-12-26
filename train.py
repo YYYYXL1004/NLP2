@@ -94,6 +94,7 @@ def main():
     parser.add_argument('--num_epoch', type=int, default=10)
     parser.add_argument('--lr', type=float, default=0.0005)
     parser.add_argument('--save_dir', type=str, default='checkpoints')
+    parser.add_argument('--exp_name', type=str, default='', help='实验名称，用于区分日志和checkpoint')
     parser.add_argument('--seed', type=int, default=1)
     parser.add_argument('--early_stop', type=int, default=5, help='早停patience，设为0禁用')
     args = parser.parse_args()
@@ -121,6 +122,8 @@ def main():
     
     # 创建模型
     model_name = args.model_type + ("_attn" if args.use_attention and args.model_type != 'transformer' else "")
+    if args.exp_name:
+        model_name = args.exp_name  # 使用自定义实验名称
     print(f"模型: {model_name}")
     model = get_model(args, zh_vocab, en_vocab).to(device)
     print(f"参数量: {sum(p.numel() for p in model.parameters() if p.requires_grad):,}")
