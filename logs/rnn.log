@@ -1,0 +1,76 @@
+配置: {'model_type': 'rnn', 'use_attention': False, 'device': 'cuda', 'batch_size': 256, 'lr': 0.001, 'num_epoch': 20}
+开始训练: 2025-12-26 17:08:47
+
+=== Epoch 1/20 ===
+Loss: 6.0179, BLEU: 0.25, 累计时间: 9.4s
+Ref: Why are you [UNK] my son?
+Hyp: I don't like to be a lot of the table.
+保存模型到 checkpoints/rnn_best.pt
+
+=== Epoch 2/20 ===
+Loss: 4.8577, BLEU: 0.52, 累计时间: 18.4s
+Ref: Why are you [UNK] my son?
+Hyp: I don't like to go to the room.
+保存模型到 checkpoints/rnn_best.pt
+
+=== Epoch 3/20 ===
+Loss: 4.4143, BLEU: 0.81, 累计时间: 27.4s
+Ref: Why are you [UNK] my son?
+Hyp: I don't want to go to the station.
+保存模型到 checkpoints/rnn_best.pt
+
+=== Epoch 4/20 ===
+Loss: 4.1096, BLEU: 0.71, 累计时间: 36.2s
+Ref: Why are you [UNK] my son?
+Hyp: I don't know how to do that.
+无提升 (1/5)
+
+=== Epoch 5/20 ===
+Loss: 3.8754, BLEU: 0.86, 累计时间: 45.1s
+Ref: Why are you [UNK] my son?
+Hyp: I don't have any more than you.
+保存模型到 checkpoints/rnn_best.pt
+
+=== Epoch 6/20 ===
+Loss: 3.6785, BLEU: 0.90, 累计时间: 53.8s
+Ref: Why are you [UNK] my son?
+Hyp: I don't want to do that.
+保存模型到 checkpoints/rnn_best.pt
+
+=== Epoch 7/20 ===
+Loss: 3.4931, BLEU: 0.74, 累计时间: 62.5s
+Ref: Why are you [UNK] my son?
+Hyp: How much is your name?
+无提升 (1/5)
+
+=== Epoch 8/20 ===
+Loss: 3.3159, BLEU: 0.62, 累计时间: 71.0s
+Ref: Why are you [UNK] my son?
+Hyp: What do you think of your kindness.
+无提升 (2/5)
+
+=== Epoch 9/20 ===
+Loss: 3.1734, BLEU: 0.74, 累计时间: 79.6s
+Ref: Why are you [UNK] my son?
+Hyp: Do you have a lot of money.
+无提升 (3/5)
+
+=== Epoch 10/20 ===
+Loss: 3.0454, BLEU: 0.79, 累计时间: 88.0s
+Ref: Why are you [UNK] my son?
+Hyp: Do you have a lot of fun.
+无提升 (4/5)
+
+=== Epoch 11/20 ===
+Loss: 2.9336, BLEU: 0.41, 累计时间: 96.5s
+Ref: Why are you [UNK] my son?
+Hyp: What do you want to go to school?
+无提升 (5/5)
+早停触发，停止训练
+
+=== 测试 ===
+Test BLEU: 0.75
+Best Valid BLEU: 0.90
+结果保存到: logs/rnn.json
+日志保存到: logs/rnn.log
+图表保存到: figures/curves_rnn.png

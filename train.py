@@ -129,21 +129,26 @@ def main():
     weights[en_vocab.word2idx['[PAD]']] = 0
     criterion = nn.NLLLoss(weight=weights)
     
-    # 日志
+    # 日志和可视化
     os.makedirs(args.save_dir, exist_ok=True)
-    logger = TrainingLogger(experiment_name=model_name) if 'TrainingLogger' in dir() else None
+    logger = TrainingLogger(log_dir="logs", name=model_name)
+    logger.set_config(args.model_type, args.use_attention, str(device),
+                      batch_size=args.batch_size, lr=args.lr, num_epoch=args.num_epoch)
+    visualizer = Visualizer(save_dir="figures")
     
     # 训练
     best_bleu = 0
     no_improve = 0
     ckpt_path = os.path.join(args.save_dir, f"{model_name}_best.pt")
+    logger.start_training()
     
     for epoch in range(args.num_epoch):
         print(f"\n=== Epoch {epoch+1}/{args.num_epoch} ===")
         train_loss = train_epoch(model, optimizer, criterion, trainloader, device)
         hyps, refs, valid_bleu = evaluate(model, validloader, en_vocab, device)
         
-        print(f"Loss: {train_loss:.4f}, BLEU: {valid_bleu:.2f}")
+        # 记录日志
+        logger.log_epoch(epoch+1, train_loss, valid_bleu, args.lr)
         print(f"Ref: {refs[0]}")
         print(f"Hyp: {hyps[0]}")
         
@@ -165,6 +170,11 @@ def main():
     hyps, refs, test_bleu = evaluate(model, testloader, en_vocab, device)
     print(f"Test BLEU: {test_bleu:.2f}")
     print(f"Best Valid BLEU: {best_bleu:.2f}")
+    
+    # 保存日志和图表
+    logger.save_results()
+    visualizer.plot_curves(logger)
+    logger.close()
 
 
 if __name__ == '__main__':

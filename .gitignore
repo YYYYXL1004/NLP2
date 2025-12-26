@@ -1,3 +1,4 @@
 .kiro
 *.pyc
 __pycache__
+checkpoints

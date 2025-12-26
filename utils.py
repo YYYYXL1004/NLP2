@@ -4,12 +4,13 @@
 
 import json
 import os
+import sys
 import time
 import matplotlib.pyplot as plt
 
 
 class TrainingLogger:
-    """训练日志记录"""
+    """训练日志记录 (同时输出到终端和文件)"""
     def __init__(self, log_dir="logs", name=None):
         self.log_dir = log_dir
         self.name = name or time.strftime("%Y%m%d_%H%M%S")
@@ -19,19 +20,37 @@ class TrainingLogger:
         self.use_attention = False
         self.config = {}
         os.makedirs(log_dir, exist_ok=True)
+        
+        # 设置日志文件，同时输出到终端和文件
+        self.log_file = os.path.join(log_dir, f"{self.name}.log")
+        self.file_handle = open(self.log_file, 'w', encoding='utf-8')
+        self._original_stdout = sys.stdout
+        sys.stdout = self  # 重定向stdout
+    
+    def write(self, text):
+        """同时写入终端和文件"""
+        self._original_stdout.write(text)
+        self.file_handle.write(text)
+        self.file_handle.flush()
+    
+    def flush(self):
+        self._original_stdout.flush()
+        self.file_handle.flush()
     
     def set_config(self, model_type, use_attention, device, **kwargs):
         self.model_type = model_type
         self.use_attention = use_attention
         self.config = {"model_type": model_type, "use_attention": use_attention, "device": device, **kwargs}
+        print(f"配置: {self.config}")
     
     def start_training(self):
         self.start_time = time.time()
+        print(f"开始训练: {time.strftime('%Y-%m-%d %H:%M:%S')}")
     
     def log_epoch(self, epoch, train_loss, valid_bleu, lr):
         elapsed = time.time() - self.start_time if self.start_time else 0
         self.logs.append({"epoch": epoch, "loss": train_loss, "bleu": valid_bleu, "lr": lr, "time": elapsed})
-        print(f"Epoch {epoch}: loss={train_loss:.4f}, bleu={valid_bleu:.2f}, time={elapsed:.1f}s")
+        print(f"Loss: {train_loss:.4f}, BLEU: {valid_bleu:.2f}, 累计时间: {elapsed:.1f}s")
     
     def get_losses(self):
         return [x["loss"] for x in self.logs]
@@ -50,7 +69,19 @@ class TrainingLogger:
         with open(path, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
         print(f"结果保存到: {path}")
+        print(f"日志保存到: {self.log_file}")
         return path
+    
+    def close(self):
+        """恢复stdout并关闭文件"""
+        sys.stdout = self._original_stdout
+        self.file_handle.close()
+    
+    def __del__(self):
+        try:
+            self.close()
+        except:
+            pass
 
 
 class Visualizer:
